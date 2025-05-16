@@ -1,0 +1,8 @@
+- hosts: all
+  gather_facts: no
+  tasks:
+    - name: Distribute public SSH key
+      ansible.posix.authorized_key:
+        user: "ansible"
+        state: present
+        key: "{{ lookup('file', '~/.ssh/id_rsa.pub') }}"
