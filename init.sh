@@ -4,14 +4,13 @@
 set -e
 
 # --- CONFIG ---
-ANSIBLE_USER="your_ssh_user"
-SSH_PASSWORD="your_password_here"
+ANSIBLE_USER="ansible"
+SSH_PASSWORD="password"
 
 sudo apt-get update -y
 sudo apt-get install -y sshpass
+ssh-keygen -t rsa -b 4096 -f "~/.ssh/id_rsa" -N ""
 
 export ANSIBLE_HOST_KEY_CHECKING=False
-
-# Run playbook with sshpass providing the password
 sshpass -p "$SSH_PASSWORD" ansible-playbook -i hosts_ini setupKeys.yml \
   -u "$ANSIBLE_USER" --ask-pass --extra-vars "ansible_ssh_pass=$SSH_PASSWORD"
